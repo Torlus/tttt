@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
+from tttt.api.models import Category
 from rest_framework import viewsets
-from tttt.api.serializers import UserSerializer, GroupSerializer
+from tttt.api.serializers import UserSerializer, GroupSerializer, CategorySerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -16,4 +17,11 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows categories to be viewed or edited.
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
