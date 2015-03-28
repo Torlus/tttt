@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
-from tttt.api.models import Category
+from .models import Category
 from rest_framework import viewsets
-from tttt.api.serializers import UserSerializer, GroupSerializer, CategorySerializer
+from .serializers import UserSerializer, GroupSerializer, CategorySerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """

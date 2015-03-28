@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from tttt.api.models import Category
+from .models import Category
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
