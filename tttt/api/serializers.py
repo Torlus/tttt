@@ -16,15 +16,12 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
-    pk = serializers.IntegerField(read_only=True)
-    # url = serializers.HyperlinkedRelatedField(view_name='category-detail', read_only=True)
     code = serializers.CharField()
     title = serializers.CharField(required=False, allow_blank=True, max_length=250)
 
     class Meta:
         model = Category
-        fields = ('pk',
-                  # 'url',
+        fields = ('url',
                   'created_at',
                   'updated_at',
                   'code',
