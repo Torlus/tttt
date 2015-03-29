@@ -17,7 +17,7 @@ class Category(models.Model):
 class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
     code = models.CharField(max_length=50, blank=False)
     title = models.CharField(max_length=250, blank=True, default='')
 
@@ -31,7 +31,7 @@ class Project(models.Model):
 class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    project = models.ForeignKey(Project)
+    project = models.ForeignKey(Project, on_delete=models.PROTECT)
     code = models.CharField(max_length=50, blank=False)
     title = models.CharField(max_length=250, blank=True, default='')
 
