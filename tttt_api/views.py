@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User, Group
-from .models import Category, Project
+from .models import Category, Project, Task
 from rest_framework import viewsets
 from .serializers import UserSerializer, GroupSerializer
-from .serializers import CategorySerializer, ProjectSerializer
+from .serializers import CategorySerializer, ProjectSerializer, TaskSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -23,3 +23,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer

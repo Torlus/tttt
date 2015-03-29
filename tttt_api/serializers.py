@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Category, Project
+from .models import Category, Project, Task
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -32,3 +32,13 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'url', 'created_at', 'updated_at',
                   'code', 'title',
                   'category_id', 'category')
+
+
+class TaskSerializer(serializers.HyperlinkedModelSerializer):
+    project_id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Task
+        fields = ('id', 'url', 'created_at', 'updated_at',
+                  'code', 'title',
+                  'project_id', 'project')
