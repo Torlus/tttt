@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from django.conf import settings
 import django.db.models.deletion
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('code', models.CharField(max_length=50)),
-                ('title', models.CharField(blank=True, max_length=250, default='')),
+                ('title', models.CharField(max_length=250, default='', blank=True)),
             ],
             options={
                 'ordering': ('created_at',),
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('code', models.CharField(max_length=50)),
-                ('title', models.CharField(blank=True, max_length=250, default='')),
+                ('title', models.CharField(max_length=250, default='', blank=True)),
                 ('category', models.ForeignKey(to='api.Category', on_delete=django.db.models.deletion.PROTECT)),
             ],
             options={
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('code', models.CharField(max_length=50)),
-                ('title', models.CharField(blank=True, max_length=250, default='')),
+                ('title', models.CharField(max_length=250, default='', blank=True)),
                 ('project', models.ForeignKey(to='api.Project', on_delete=django.db.models.deletion.PROTECT)),
             ],
             options={
@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('date', models.DateField(auto_now=True)),
                 ('units', models.IntegerField()),
-                ('owner', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=django.db.models.deletion.PROTECT, related_name='works')),
+                ('owner', models.ForeignKey(related_name='works', to=settings.AUTH_USER_MODEL, on_delete=django.db.models.deletion.PROTECT)),
                 ('task', models.ForeignKey(to='api.Task', on_delete=django.db.models.deletion.PROTECT)),
             ],
             options={
