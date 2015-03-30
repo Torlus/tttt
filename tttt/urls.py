@@ -19,6 +19,10 @@ admin.autodiscover()
 router = DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'projects', views.ProjectViewSet)
+router.register(r'tasks', views.TaskViewSet)
+router.register(r'works', views.WorkViewSet)
 router.include_root_view = False
 
 urlpatterns = [

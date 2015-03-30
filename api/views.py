@@ -16,7 +16,11 @@ class APIRootView(views.APIView):
     def get(self, request, format=None):
         return Response({
             'users': reverse('user-list', request=request, format=format),
-            'groups': reverse('group-list', request=request, format=format)
+            'groups': reverse('group-list', request=request, format=format),
+            'categories': reverse('category-list', request=request, format=format),
+            'projects': reverse('project-list', request=request, format=format),
+            'tasks': reverse('task-list', request=request, format=format),
+            'works': reverse('work-list', request=request, format=format),
         })
 
 
@@ -44,6 +48,38 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+
+class WorkViewSet(viewsets.ModelViewSet):
+    queryset = Work.objects.all()
+    serializer_class = WorkSerializer
     permission_classes = [
         permissions.IsAuthenticated,
     ]
