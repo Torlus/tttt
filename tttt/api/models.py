@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -37,6 +38,18 @@ class Task(models.Model):
 
     def __str__(self):
         return str(self.project) + " / [" + self.code + ": " + self.title + "]"
+
+    class Meta:
+        ordering = ('created_at',)
+
+
+class Work(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='works')
+    task = models.ForeignKey(Task, on_delete=models.PROTECT)
+    date = models.DateField(auto_now=True)
+    units = models.IntegerField()
 
     class Meta:
         ordering = ('created_at',)
