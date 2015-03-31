@@ -46,14 +46,9 @@ class TaskSerializer(serializers.HyperlinkedModelSerializer):
 
 class WorkSerializer(serializers.HyperlinkedModelSerializer):
     task_id = serializers.IntegerField(read_only=True)
-    owner_id = serializers.IntegerField(read_only=True)
     date = serializers.DateField(required=True)
     units = serializers.IntegerField(required=True, min_value=1)
-
-    def get_validation_exclusions(self):
-        # Need to exclude 'owner' since we'll add that later based off the request
-        exclusions = super(WorkSerializer, self).get_validation_exclusions()
-        return exclusions + ['owner']
+    owner_id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Work

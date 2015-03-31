@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User, Group
 from rest_framework import permissions, viewsets, views
 # from rest_framework import generics
@@ -58,6 +59,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [
         permissions.IsAuthenticated,
+        permissions.DjangoModelPermissions,
     ]
 
 
@@ -66,6 +68,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [
         permissions.IsAuthenticated,
+        permissions.DjangoModelPermissions,
     ]
 
 
@@ -74,6 +77,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = [
         permissions.IsAuthenticated,
+        permissions.DjangoModelPermissions
     ]
 
 
@@ -82,5 +86,15 @@ class WorkViewSet(viewsets.ModelViewSet):
     serializer_class = WorkSerializer
     permission_classes = [
         permissions.IsAuthenticated,
+        permissions.DjangoModelPermissions,
     ]
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        instance = self.get_object()
+        if instance.owner == self.request.user or self.request.user.is_staff:
+            serializer.save()
+        else:
+            raise PermissionDenied
