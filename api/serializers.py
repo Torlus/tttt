@@ -17,41 +17,41 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
                   'name')
 
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'url', 'created_at', 'updated_at',
                   'code', 'title')
 
 
-class ProjectSerializer(serializers.HyperlinkedModelSerializer):
-    category_id = serializers.IntegerField(read_only=True)
+class ProjectSerializer(serializers.ModelSerializer):
+    category_url = serializers.HyperlinkedRelatedField(source='category', read_only=True, view_name='category-detail')
 
     class Meta:
         model = Project
         fields = ('id', 'url', 'created_at', 'updated_at',
                   'code', 'title',
-                  'category_id', 'category')
+                  'category', 'category_url')
 
 
-class TaskSerializer(serializers.HyperlinkedModelSerializer):
-    project_id = serializers.IntegerField(read_only=True)
+class TaskSerializer(serializers.ModelSerializer):
+    project_url = serializers.HyperlinkedRelatedField(source='project', read_only=True, view_name='project-detail')
 
     class Meta:
         model = Task
         fields = ('id', 'url', 'created_at', 'updated_at',
                   'code', 'title',
-                  'project_id', 'project')
+                  'project', 'project_url')
 
 
-class WorkSerializer(serializers.HyperlinkedModelSerializer):
-    task_id = serializers.IntegerField(read_only=True)
+class WorkSerializer(serializers.ModelSerializer):
+    task_url = serializers.HyperlinkedRelatedField(source='task', read_only=True, view_name='task-detail')
     date = serializers.DateField(required=True)
     units = serializers.IntegerField(required=True, min_value=1)
-    owner_id = serializers.IntegerField(read_only=True)
+    owner_url = serializers.HyperlinkedRelatedField(source='owner', read_only=True, view_name='user-detail')
 
     class Meta:
         model = Work
         fields = ('id', 'url', 'created_at', 'updated_at',
                   'date', 'units',
-                  'task_id', 'task', 'owner_id', 'owner')
+                  'task', 'task_url', 'owner', 'owner_url')
