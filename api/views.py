@@ -1,3 +1,5 @@
+from django.db.models import Sum
+from rest_framework.validators import ValidationError
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User, Group
 from rest_framework import permissions, viewsets, views
@@ -80,6 +82,8 @@ class TaskViewSet(viewsets.ModelViewSet):
         permissions.DjangoModelPermissions
     ]
 
+UNITS_MAX = 8
+
 
 class WorkViewSet(viewsets.ModelViewSet):
     queryset = Work.objects.all()
@@ -89,12 +93,25 @@ class WorkViewSet(viewsets.ModelViewSet):
         permissions.DjangoModelPermissions,
     ]
 
+    def count_units(self):
+        units = int(self.request.data['units'])
+        q = Work.objects.filter(date=self.request.data['date'])
+        q = q.filter(owner=self.request.data['owner'])
+        total = q.aggregate(Sum('units'))['units__sum']
+        if total is None:
+            total = 0
+        if total + units > UNITS_MAX:
+            raise ValidationError('units per day must not exceed ' + str(UNITS_MAX)
+                                  + ' current: ' + str(total))
+
     def perform_create(self, serializer):
+        self.count_units()
         serializer.save(owner=self.request.user)
 
     def perform_update(self, serializer):
         instance = self.get_object()
         if instance.owner == self.request.user or self.request.user.is_staff:
+            self.count_units()
             serializer.save()
         else:
             raise PermissionDenied
