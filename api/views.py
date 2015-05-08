@@ -1,14 +1,22 @@
+from django.views.generic.base import TemplateView
 from django.db.models import Sum
-from rest_framework.validators import ValidationError
+
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User, Group
+
+from rest_framework.validators import ValidationError
 from rest_framework import permissions, viewsets, views
 # from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+
 from .models import Category, Project, Task, Work
 from .serializers import UserSerializer, GroupSerializer
 from .serializers import CategorySerializer, ProjectSerializer, TaskSerializer, WorkSerializer
+
+
+class HomePageView(TemplateView):
+    template_name = 'index.html'
 
 
 class APIRootView(views.APIView):

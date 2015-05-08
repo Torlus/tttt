@@ -26,9 +26,10 @@ router.register(r'works', views.WorkViewSet)
 router.include_root_view = False
 
 urlpatterns = [
-    url(r'^$', views.APIRootView.as_view(), name='api-root'),
-    url(r'^', include(router.urls)),
+    url(r'^$', views.HomePageView.as_view(), name='home'),
+    url(r'^api$', views.APIRootView.as_view(), name='api-root'),
+    url(r'^api/', include(router.urls)),
     # url(r'^users', include(user_urls)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
