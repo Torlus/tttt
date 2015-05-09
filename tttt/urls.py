@@ -26,7 +26,7 @@ router.register(r'works', views.WorkViewSet)
 router.include_root_view = False
 
 urlpatterns = [
-    url(r'^$', views.HomePageView.as_view(), name='home'),
+    # url(r'^$', views.HomePageView.as_view(), name='home'),
     url(r'^api$', views.APIRootView.as_view(), name='api-root'),
     url(r'^api/', include(router.urls)),
     # url(r'^users', include(user_urls)),
